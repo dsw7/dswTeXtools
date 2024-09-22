@@ -1,0 +1,56 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{dswtextools}[2024/09/22 David Weber LaTeX tools]
+
+\RequirePackage{changepage} % Adjusting margins between blocks of text, etc.
+\RequirePackage{dashrule}   % Printing dashed lines
+\RequirePackage{float}      % Working with figures
+\RequirePackage{graphicx}   % Working with figures
+\RequirePackage{xparse}     % Interface for defining commands
+
+% -----------------------------------------------------------------------------------------------------------
+
+% Tell \includegraphics where to look for files
+\graphicspath{ {./figures} }
+
+% -----------------------------------------------------------------------------------------------------------
+\newcommand{\quotes}[1]
+{
+  % Wrap a block of text with open and closed double quotes
+  ``#1''
+}
+
+\newcommand{\dashedline}
+{
+  % Print a full text width dashed horizontal line
+  \noindent\hdashrule[0.5ex]{\textwidth}{0.5pt}{1mm}
+}
+
+\newcommand{\synopsis}[1]
+{
+  % A synopsis section that summarizes the discussion in the document
+  \dashedline
+  \begin{adjustwidth}{0.25in}{0.25in}
+    #1
+  \end{adjustwidth}
+  \dashedline
+}
+
+\NewDocumentCommand{\addfigure}{ O{0.8} m m m }
+{
+  % Add a figure such as a *.png
+  % 1. O(0.8) -> Set width, optional, defaults to 0.8
+  % 2. m      -> Set filename, mandatory
+  % 3. m      -> Set figure label, mandatory
+  % 4. m      -> Set caption, mandatory
+  %
+  % Usage 1: \addfigure[1.0]{foobar.png}{fig:f1}{A foobar}
+  % Usage 2: \addfigure{foobar.png}{fig:f1}{A foobar}
+  %
+  % ! This function will look for a `figures` directory to load files from
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=#1\textwidth]{#2}
+    \caption{#4}
+    \label{#3}
+  \end{figure}
+}
