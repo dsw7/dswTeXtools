@@ -1,0 +1,6 @@
+#!/bin/bash
+
+dst=${HOME}/texmf/tex/latex/dswtextools
+
+mkdir -vp "$dst"
+cp -v dswtextools.sty "$dst"
