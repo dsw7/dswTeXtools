@@ -3,7 +3,7 @@ Some basic LaTeX helpers. Really that's it!
 
 ## Setup
 ### Manual
-I am using `pdflatex` and I place this `dswtextools.sty` into:
+I am using `pdflatex` and I place the `dswtextools.sty` package file as follows:
 ```
 texmf/
 └── tex/
