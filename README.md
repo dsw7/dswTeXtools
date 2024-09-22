@@ -9,7 +9,7 @@ texmf/
 └── tex/
     └── latex/
         └── dswtextools/
-            └── dswtextools.sty*
+            └── dswtextools.sty
 ```
 Under my home directory.
 ### Automated
