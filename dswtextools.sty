@@ -5,17 +5,42 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{dswtextools}[2024/09/22 David Weber LaTeX tools]
 
-\RequirePackage{changepage} % Adjusting margins between blocks of text, etc.
-\RequirePackage{dashrule}   % Printing dashed lines
-\RequirePackage{float}      % Working with figures
-\RequirePackage{graphicx}   % Working with figures
-\RequirePackage{xparse}     % Interface for defining commands
+\RequirePackage[most]{tcolorbox} % Colored boxes for synopsis, statements, etc.
+\RequirePackage{dashrule}        % Printing dashed lines
+\RequirePackage{float}           % Working with figures
+\RequirePackage{graphicx}        % Working with figures
+\RequirePackage{xparse}          % Interface for defining commands
 
 % -----------------------------------------------------------------------------------------------------------
 % Tell \includegraphics where to look for files
 \graphicspath{ {./figures} }
 
 % -----------------------------------------------------------------------------------------------------------
+% Scope: private
+
+\newtcolorbox[]{tsynopsis}[1][]
+{
+  enhanced,
+  breakable,
+  fonttitle=\scshape,
+  title={Synopsis},
+  colback=blue!5!white,
+  colframe=blue!75!black,
+  #1
+}
+
+\newtcolorbox[auto counter,number within=section]{tstatement}[1][]
+{
+  enhanced,
+  breakable,
+  fonttitle=\scshape,
+  title={Statement \thetcbcounter},
+  #1
+}
+
+% -----------------------------------------------------------------------------------------------------------
+% Scope: public
+
 \newcommand{\quotes}[1]
 {
   % Wrap a block of text with open and closed double quotes
@@ -26,16 +51,6 @@
 {
   % Print a full text width dashed horizontal line
   \noindent\hdashrule[0.5ex]{\textwidth}{0.5pt}{1mm}
-}
-
-\newcommand{\synopsis}[1]
-{
-  % A synopsis section that summarizes the discussion in the document
-  \dashedline
-  \begin{adjustwidth}{0.25in}{0.25in}
-    #1
-  \end{adjustwidth}
-  \dashedline
 }
 
 \NewDocumentCommand{\addfigure}{ O{0.8} m m m }
@@ -56,4 +71,24 @@
     \caption{#4}
     \label{#3}
   \end{figure}
+}
+
+\NewDocumentCommand{\synopsis}{ m }
+{
+  % Print a synopsis
+  % Argument 1 -> The synopsis
+  \begin{tsynopsis}
+    #1
+  \end{tsynopsis}
+}
+
+\NewDocumentCommand{\statement}{ m m }
+{
+  % Print a statement
+  % Argument 1 -> The statement label, such as S1, S2, ..., Sn
+  % Argument 2 -> The statement itself
+  % ! Ensure that this is called within the body of a section
+  \begin{tstatement}[label=#1]
+    #2
+  \end{tstatement}
 }
