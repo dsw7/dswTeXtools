@@ -53,6 +53,12 @@
   \noindent\hdashrule[0.5ex]{\textwidth}{0.5pt}{1mm}
 }
 
+\newcommand{\rf}[1]
+{%
+  % Reference to a figure -> see \addfigure command
+  \textit{Figure \ref{#1}}%
+}
+
 \NewDocumentCommand{\addfigure}{ O{0.8} m m m }
 {
   % Add a figure such as a *.png
